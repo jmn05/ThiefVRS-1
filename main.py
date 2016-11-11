@@ -30,16 +30,17 @@ class treasure():
         self.location = [randrange(0,775),randrange(0,475)]
         image = C.create_oval(self.location[0],self.location[1],self.location[0]+25,self.location[1]+25)
         
-
+photo = PhotoImage(file = 'Thief.png')
     
         
-class thief:
-    xspeed = 0
-    yspeed = 0
-    locations = {}
+class thief():
+    location =[]
+    def __init__(self):
+        self.location = [randrange(0,775),randrange(0,475)] 
+        image2 = C.create_image(self.location[0],self.location[1],image=photo, anchor = NW)
 
 treasuresList = []
-
+thief()
 for i in range(0,numberOfTreasures):
     treasuresList.append(treasure())
     print(treasuresList[i].location)
@@ -47,7 +48,6 @@ for i in range(0,numberOfTreasures):
 def resetTreasures():
     global treasuresList
     global numberOfTreasures
-    
     for i in range(0,numberOfTreasures):
         treasuresList.append(treasure())
         print(treasuresList[i].location)
@@ -56,6 +56,7 @@ def callReset():
     C.delete("all")
     global treasuresList
     resetTreasures()
+    thief()
 
 
 #Gives the buttons their various properties
@@ -84,5 +85,4 @@ quitButton.pack(side=LEFT)
 
 
 window.mainloop()
-
 
