@@ -6,6 +6,7 @@ simulating = False #Boolean flag for when the simulation is running to stop cert
 
 window = Tk() #Creates a new tkinter window
 
+
 #This function fully closes python
 def quit():
     global window
@@ -23,44 +24,54 @@ C = Canvas(window,height=500,width=800,bg="white")
 C.pack()
 
 numberOfTreasures = 8
+treasuresList = []
 
-class treasure():
+class Treasure():
     location =[]
     def __init__(self):
         self.location = [randrange(0,775),randrange(0,475)]
         image = C.create_oval(self.location[0],self.location[1],self.location[0]+25,self.location[1]+25)
         
-photo = PhotoImage(file = 'Thief.png')
+photo = PhotoImage(file = "Thief.gif")
     
-        
-class thief():
-    location =[]
+       
+class Thief():
     def __init__(self):
-        self.location = [randrange(0,775),randrange(0,475)] 
+        self.location = [randrange(0,775),randrange(0,475)]
+        self.speed = 1
         image2 = C.create_image(self.location[0],self.location[1],image=photo, anchor = NW)
+    def move_up(self):
+        self.location[1] -= self.speed
+    def move_down(self):
+        self.location[1] += self.speed
+    def move_left(self):
+        self.location[0] -= self.speed
+    def move_right(self):
+        self.location[0] += self.speed
 
-treasuresList = []
-thief()
 for i in range(0,numberOfTreasures):
-    treasuresList.append(treasure())
+    treasuresList.append(Treasure())
     print(treasuresList[i].location)
+
+
 
 def resetTreasures():
     global treasuresList
+    treasuresList = []
     global numberOfTreasures
     for i in range(0,numberOfTreasures):
-        treasuresList.append(treasure())
+        treasuresList.append(Treasure())
         print(treasuresList[i].location)
     
 def callReset():
     C.delete("all")
     global treasuresList
     resetTreasures()
-    thief()
+    Thief()
 
 
 #Gives the buttons their various properties
-placeThiefButton = Button(controlPanel, text = "Place Thief")
+placeThiefButton = Button(controlPanel, text = "Place Thief", command = placeThief)
 placeCopButton = Button(controlPanel, text = "Place Cops")
 placeTreasuresButton = Button(controlPanel, text = "Place Treasures", command=callReset)
 startButton = Button(controlPanel, text = "Start Simulation")
@@ -85,4 +96,3 @@ quitButton.pack(side=LEFT)
 
 
 window.mainloop()
-
