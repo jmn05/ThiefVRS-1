@@ -20,7 +20,7 @@ window.geometry("800x600")
 controlPanel = Frame(window) # A Frame for all the buttons to go into
 
 #creates a canvas for the virtual robots to move on
-C = Canvas(window,height=500,width=800,bg="white")
+C = Canvas(window,height=500,width=800,bg="gray")
 C.pack()
 
 numberOfTreasures = 8
@@ -39,7 +39,7 @@ class Thief():
     def __init__(self):
         self.location = [randrange(0,775),randrange(0,475)]
         self.speed = 1
-        image2 = C.create_image(self.location[0],self.location[1],image=photo, anchor = NW)
+        image2 = C.create_image(self.location[0]+25,self.location[1]+25,image=photo, anchor = NW)
     def move_up(self):
         self.location[1] -= self.speed
     def move_down(self):
@@ -73,14 +73,18 @@ def placeThief():
     thief()
 
 #Gives the buttons their various properties
-resetCanvas = Button(controlPanel, text="Reset", command= callReset)
+placeThiefButton = Button(controlPanel, text = "Place Thief", command = placeThief)
+placeCopButton = Button(controlPanel, text = "Place Cops")
+placeTreasuresButton = Button(controlPanel, text = "Place Treasures", command=callReset)
 startButton = Button(controlPanel, text = "Start Simulation")
 stopButton = Button(controlPanel,text = "End Simulation")
 quitButton = Button(controlPanel, text = "Quit", command= quit)
 
 #Places the button on the screen
 controlPanel.pack()
-resetCanvas.pack(side=LEFT)
+placeThiefButton.pack(side=LEFT)
+placeCopButton.pack(side=LEFT)
+placeTreasuresButton.pack(side=LEFT)
 startButton.pack(side=LEFT)
 stopButton.pack(side=LEFT)
 quitButton.pack(side=LEFT)
