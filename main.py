@@ -69,20 +69,18 @@ def callReset():
     resetTreasures()
     Thief()
 
+def placeThief():
+    thief()
 
 #Gives the buttons their various properties
-placeThiefButton = Button(controlPanel, text = "Place Thief", command = placeThief)
-placeCopButton = Button(controlPanel, text = "Place Cops")
-placeTreasuresButton = Button(controlPanel, text = "Place Treasures", command=callReset)
+resetCanvas = Button(controlPanel, text="Reset", command= callReset)
 startButton = Button(controlPanel, text = "Start Simulation")
 stopButton = Button(controlPanel,text = "End Simulation")
 quitButton = Button(controlPanel, text = "Quit", command= quit)
 
 #Places the button on the screen
 controlPanel.pack()
-placeThiefButton.pack(side=LEFT)
-placeCopButton.pack(side=LEFT)
-placeTreasuresButton.pack(side=LEFT)
+resetCanvas.pack(side=LEFT)
 startButton.pack(side=LEFT)
 stopButton.pack(side=LEFT)
 quitButton.pack(side=LEFT)
