@@ -23,8 +23,10 @@ controlPanel = Frame(window) # A Frame for all the buttons to go into
 C = Canvas(window,height=500,width=800,bg="gray")
 C.pack()
 
-numberOfTreasures = 8
+global numberOfTreasures
+global treasuresList
 treasuresList = []
+numberOfTreasures = 8
 
 class Treasure():
     location =[]
@@ -49,16 +51,13 @@ class Thief():
     def move_right(self):
         self.location[0] += self.speed
 
-for i in range(0,numberOfTreasures):
-    treasuresList.append(Treasure())
-    print(treasuresList[i].location)
-
-
+##for i in range(0,numberOfTreasures):
+##    treasuresList.append(Treasure())
+##    print(treasuresList[i].location)
 
 def resetTreasures():
-    global treasuresList
     treasuresList = []
-    global numberOfTreasures
+    numberOfTreasures = 8
     for i in range(0,numberOfTreasures):
         treasuresList.append(Treasure())
         print(treasuresList[i].location)
@@ -67,7 +66,6 @@ def callReset():
     C.delete("all")
     global treasuresList
     resetTreasures()
-    Thief()
 
 def placeThief():
     thief()
