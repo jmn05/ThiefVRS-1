@@ -1,0 +1,104 @@
+from tkinter import * #Imports tkinter for the GUI
+from time import * #Times is used for animations
+from random import *
+
+simulating = False #Boolean flag for when the simulation is running to stop certain functions from running
+
+window = Tk() #Creates a new tkinter window
+
+global window
+#This function fully closes python
+def quit():
+    window.quit()
+    window.destroy()
+
+#initalises the window
+window.title("Thief VRS")
+window.geometry("800x600")
+
+controlPanel = Frame(window) # A Frame for all the buttons to go into
+
+#creates a canvas for the virtual robots to move on
+C = Canvas(window,height=500,width=800,bg="gray")
+C.pack()
+
+global numberOfTreasures
+global treasuresList
+numberOfTreasures = 8
+treasuresList = []
+
+class Treasure():
+    location =[]
+    def __init__(self):
+        self.location = [randrange(0,725),randrange(0,425)]
+        image = C.create_oval(self.location[0],self.location[1],self.location[0]+25,self.location[1]+25)
+        
+photo = PhotoImage(file = "Thief.gif")
+cop = PhotoImage(file = "cop.gif")
+
+class Thief():
+    def __init__(self):
+        self.location = [randrange(0,725),randrange(0,425)]
+        self.speed = 1
+        image2 = C.create_image(self.location[0],self.location[1],image=photo, anchor = NW)
+    def move_up(self):
+        self.location[1] -= self.speed
+    def move_down(self):
+        self.location[1] += self.speed
+    def move_left(self):
+        self.location[0] -= self.speed
+    def move_right(self):
+        self.location[0] += self.speed
+
+class Cop():
+    def __init__(self):
+        self.location = [randrange(0,725),randrange(0,425)]
+        self.speed = 1
+        image2 = C.create_image(self.location[0],self.location[1],image=cop, anchor = NW)
+
+Cop()
+Thief()
+for i in range(0,numberOfTreasures):
+    treasuresList.append(Treasure())
+
+def resetTreasures():
+    treasuresList = []
+    Thief()
+    for i in range(0,numberOfTreasures):
+        treasuresList.append(Treasure())
+       
+global treasuresList
+
+def callReset():
+    C.delete("all")
+    resetTreasures()
+    
+
+def placeThief():
+    Thief()
+
+def placeCop():
+    Cop()
+
+#Gives the buttons their various properties
+resetCanvas = Button(controlPanel, text="Reset", command= callReset)
+startButton = Button(controlPanel, text = "Start Simulation")
+stopButton = Button(controlPanel,text = "End Simulation")
+quitButton = Button(controlPanel, text = "Quit", command= quit)
+
+#Places the button on the screen
+controlPanel.pack()
+resetCanvas.pack(side=LEFT)
+startButton.pack(side=LEFT)
+stopButton.pack(side=LEFT)
+quitButton.pack(side=LEFT)
+
+
+
+################################################################################################################
+
+
+
+
+
+window.mainloop()
