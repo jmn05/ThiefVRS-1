@@ -1,8 +1,9 @@
 from tkinter import * #Imports tkinter for the GUI
 from time import * #Times is used for animations
 from random import *
-
+from math import *
 simulating = False #Boolean flag for when the simulation is running to stop certain functions from running
+target = [0,0]
 
 window = Tk() #Creates a new tkinter window
 
@@ -20,13 +21,11 @@ window.geometry("800x600")
 controlPanel = Frame(window) # A Frame for all the buttons to go into
 
 #creates a canvas for the virtual robots to move on
-C = Canvas(window,height=500,width=800,bg="gray")
+C = Canvas(window,height=500,width=800,bg="white")
 C.pack()
 
-global numberOfTreasures
-global treasuresList
-treasuresList = []
 numberOfTreasures = 8
+treasuresList = []
 
 class Treasure():
     location =[]
@@ -39,9 +38,9 @@ photo = PhotoImage(file = "Thief.gif")
        
 class Thief():
     def __init__(self):
-        self.location = [randrange(0,775),randrange(0,475)]
+        self.location = [randrange(0,750),randrange(0,450)]
         self.speed = 1
-        image2 = C.create_image(self.location[0]+25,self.location[1]+25,image=photo, anchor = NW)
+        image2 = C.create_image(self.location[0],self.location[1],image=photo, anchor = NW)
     def move_up(self):
         self.location[1] -= self.speed
     def move_down(self):
@@ -51,13 +50,31 @@ class Thief():
     def move_right(self):
         self.location[0] += self.speed
 
-##for i in range(0,numberOfTreasures):
-##    treasuresList.append(Treasure())
-##    print(treasuresList[i].location)
+for i in range(0,numberOfTreasures):
+    treasuresList.append(Treasure())
+    print(treasuresList[i].location)
+
+thief = Thief()
+
+def getNearestTreasure():
+    global treasuresList
+    global thief
+    global target
+    current = 0
+    best = 10000
+    for i in range(0,len(treasuresList)):
+        print(thief.location[0])
+        current = sqrt(((thief.location[0]-treasuresList[i].location[0])**2) + ((thief.location[1]-treasuresList[i].location[1])**2))
+        if current < best:
+            target[0] = int(treasuresList[i].location[0])
+            target[1] = int(treasuresList[i].location[1])
+        print(best)
+
 
 def resetTreasures():
+    global treasuresList
     treasuresList = []
-    numberOfTreasures = 8
+    global numberOfTreasures
     for i in range(0,numberOfTreasures):
         treasuresList.append(Treasure())
         print(treasuresList[i].location)
@@ -66,23 +83,20 @@ def callReset():
     C.delete("all")
     global treasuresList
     resetTreasures()
+    thief = Thief()
 
 def placeThief():
-    thief()
+    thief = Thief()
 
 #Gives the buttons their various properties
-placeThiefButton = Button(controlPanel, text = "Place Thief", command = placeThief)
-placeCopButton = Button(controlPanel, text = "Place Cops")
-placeTreasuresButton = Button(controlPanel, text = "Place Treasures", command=callReset)
+resetCanvas = Button(controlPanel, text="Reset", command= callReset)
 startButton = Button(controlPanel, text = "Start Simulation")
 stopButton = Button(controlPanel,text = "End Simulation")
 quitButton = Button(controlPanel, text = "Quit", command= quit)
 
 #Places the button on the screen
 controlPanel.pack()
-placeThiefButton.pack(side=LEFT)
-placeCopButton.pack(side=LEFT)
-placeTreasuresButton.pack(side=LEFT)
+resetCanvas.pack(side=LEFT)
 startButton.pack(side=LEFT)
 stopButton.pack(side=LEFT)
 quitButton.pack(side=LEFT)
@@ -91,8 +105,13 @@ quitButton.pack(side=LEFT)
 
 ################################################################################################################
 
+def mainLoop():
+    global treasuresList
+    global thief
+    getNearestTreasure()
+    window.after(mainLoop(),16)
+    
 
-
-
+#window.after(mainLoop(),16)
 
 window.mainloop()
