@@ -4,6 +4,7 @@ from random import *
 from math import *
 simulating = False #Boolean flag for when the simulation is running to stop certain functions from running
 target = [0,0]
+score = 0
 
 window = Tk() #Creates a new tkinter window
 
@@ -22,12 +23,21 @@ controlPanel = Frame(window) # A Frame for all the buttons to go into
 
 #creates a canvas for the virtual robots to move on
 
-
 C = Canvas(window,height=500,width=800,bg="white")
 C.pack()
 
 numberOfTreasures = 8
 treasuresList = []
+
+photo = PhotoImage(file = "Thief.gif")
+photo2 = PhotoImage(file = "cop.gif")
+photo3 = PhotoImage(file = "coin.gif")
+photo4 = PhotoImage(file = "cop.gif")
+class Back():
+#Gives the buttons their various properties
+    def __init__(self):
+        self.location = [randrange(0,725),randrange(0,425)]
+        image5 = C.create_image(self.location[0],self.location[1],image=photo4, anchor = NW)
 
 class Treasure():
     location =[]
@@ -35,10 +45,8 @@ class Treasure():
         self.location = [randrange(0,725),randrange(0,425)]
         image4 = C.create_image(self.location[0],self.location[1],image=photo3, anchor = NW)
         
-photo = PhotoImage(file = "Thief.gif")
-photo2 = PhotoImage(file = "cop.gif")
-photo3 = PhotoImage(file = "coin.gif")
-       
+
+
 class Thief():
     def __init__(self):
         self.location = [randrange(0,725),randrange(0,425)]
@@ -65,6 +73,7 @@ for i in range(0,numberOfTreasures):
 
 thief = Thief()
 cop = Cop()
+back = Back ()
 
 def getNearestTreasure():
     global treasuresList
@@ -103,6 +112,7 @@ resetCanvas = Button(controlPanel, text="Reset", command= callReset)
 startButton = Button(controlPanel, text = "Start Simulation")
 stopButton = Button(controlPanel,text = "End Simulation")
 quitButton = Button(controlPanel, text = "Quit", command= quit)
+scoreLabel = Label(controlPanel, text="Score: " + str(score))
 
 #Places the button on the screen
 controlPanel.pack()
@@ -110,6 +120,7 @@ resetCanvas.pack(side=LEFT)
 startButton.pack(side=LEFT)
 stopButton.pack(side=LEFT)
 quitButton.pack(side=LEFT)
+scoreLabel.pack()
 
 
 
