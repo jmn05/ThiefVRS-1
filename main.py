@@ -56,6 +56,16 @@ for i in range(0,numberOfTreasures):
 
 thief = Thief()
 
+def startSimulation():
+    global simulating
+    simulating = True
+    window.after(16,mainLoop())
+ 
+def stopSimulation():
+    global simulating
+    simulating = False
+
+    
 def getNearestTreasure():
     global treasuresList
     global thief
@@ -63,12 +73,11 @@ def getNearestTreasure():
     current = 0
     best = 10000
     for i in range(0,len(treasuresList)):
-        print(thief.location[0])
         current = sqrt(((thief.location[0]-treasuresList[i].location[0])**2) + ((thief.location[1]-treasuresList[i].location[1])**2))
         if current < best:
             target[0] = int(treasuresList[i].location[0])
             target[1] = int(treasuresList[i].location[1])
-        print(best)
+    print(target)
 
 
 def resetTreasures():
@@ -82,6 +91,7 @@ def resetTreasures():
 def callReset():
     C.delete("all")
     global treasuresList
+
     resetTreasures()
     thief = Thief()
 
@@ -90,15 +100,13 @@ def placeThief():
 
 #Gives the buttons their various properties
 resetCanvas = Button(controlPanel, text="Reset", command= callReset)
-startButton = Button(controlPanel, text = "Start Simulation")
-stopButton = Button(controlPanel,text = "End Simulation")
+startButton = Button(controlPanel, text = "Start Simulation",command=startSimulation)
 quitButton = Button(controlPanel, text = "Quit", command= quit)
 
 #Places the button on the screen
 controlPanel.pack()
 resetCanvas.pack(side=LEFT)
 startButton.pack(side=LEFT)
-stopButton.pack(side=LEFT)
 quitButton.pack(side=LEFT)
 
 
@@ -108,10 +116,13 @@ quitButton.pack(side=LEFT)
 def mainLoop():
     global treasuresList
     global thief
-    getNearestTreasure()
-    window.after(mainLoop(),16)
+    global simulating
+    while simulating == True:
+        getNearestTreasure()
+        
+    
     
 
-#window.after(mainLoop(),16)
+window.after(16,mainLoop())
 
 window.mainloop()
