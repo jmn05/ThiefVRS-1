@@ -60,14 +60,6 @@ class Thief():
         self.location[0] = self.location[0] - self.move*self.speed
         C.coords(self.image2,self.location[0],self.location[1])
         C.update()    
-##    def move_up(self):
-##        self.location[1] -= self.speed
-##    def move_down(self):
-##        self.location[1] += self.speed
-##    def move_left(self):
-##        self.location[0] -= self.speed
-##    def move_right(self):
-##        self.location[0] += self.speed
 
 for i in range(0,numberOfTreasures):
     treasuresList.append(Treasure())
@@ -100,10 +92,9 @@ def thiefMove():
     while thief.location[0] != target[0] and thief.location[1] != target[1]:
         if thief.location[0] < target[0]:
             thief.move_right()
-            print("Kupa")
         else:
             thief.move_left()
-            print("Hello")
+       
         if thief.location[1] < target[1]:
             thief.move_down()
         else:
