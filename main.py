@@ -107,7 +107,6 @@ def thiefMove():
             else:
                 thief.move_up()
         C.delete(treasuresList.pop(int(target[2])).image)
-        print("couves")
         
 #this function deletes all the treasures and sets new random treasures
 def resetTreasures():
@@ -123,10 +122,7 @@ def callReset():
     C.delete("all")
     global treasuresList
     resetTreasures()
-    thief = Thief()
-
-#this function places a thief into the canvas
-def placeThief():
+    global thief
     thief = Thief()
 
 for i in range(0,numberOfTreasures):
