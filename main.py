@@ -44,23 +44,31 @@ class Thief():
     def __init__(self):
         self.location = [randrange(0,750),randrange(0,450)]
         self.image2 = C.create_image(self.location[0],self.location[1],image=photo, anchor = CENTER)
-        self.speed = 1
+        self.speed = 5
         self.move = 1
         self.notready = False
     def move_up(self):
         self.location[1] = self.location[1] - self.move*self.speed
+        if self.location[1] < target[1]:
+            self.location[1] = target[1]
         C.coords(self.image2,self.location[0],self.location[1])
         C.update()
     def move_down(self):
         self.location[1] = self.location[1] + self.move*self.speed
+        if self.location[1] > target[1]:
+            self.location[1] = target[1]
         C.coords(self.image2,self.location[0],self.location[1])
         C.update()
     def move_right(self):
         self.location[0] = self.location[0] + self.move*self.speed
+        if self.location[0] > target[0]:
+            self.location[0] = target[0]
         C.coords(self.image2,self.location[0],self.location[1])
         C.update()
     def move_left(self):
         self.location[0] = self.location[0] - self.move*self.speed
+        if self.location[0] < target[0]:
+            self.location[0] = target[0]
         C.coords(self.image2,self.location[0],self.location[1])
         C.update()
         
@@ -88,21 +96,19 @@ def thiefMove():
     global treasuresList
     global target
     global count
-    getNearestTreasure()
-    while thief.location[0] != target[0] or thief.location[1] != target[1]:
-        if thief.location[0] < target[0]:
-            thief.move_right()
-        else:
-            thief.move_left()
-        if thief.location[1] < target[1]:
-            thief.move_down()
-        else:
-            thief.move_up()
-    treasuresList.pop(int(target[2]).location)
-    if len(treasuresList) == 0:
-        simulating = False
-    else:
-        thiefMove()   
+    while len(treasuresList) != 0:
+        getNearestTreasure()
+        while thief.location[0] != target[0] or thief.location[1] != target[1]:
+            if thief.location[0] < target[0]:
+                thief.move_right()
+            else:
+                thief.move_left()
+            if thief.location[1] < target[1]:
+                thief.move_down()
+            else:
+                thief.move_up()
+        treasuresList.pop(int(target[2]))
+        print("couves")
         
 #this function deletes all the treasures and sets new random treasures
 def resetTreasures():
@@ -119,6 +125,7 @@ def callReset():
     global treasuresList
     resetTreasures()
     thief = Thief()
+
 #this function places a thief into the canvas
 def placeThief():
     thief = Thief()
