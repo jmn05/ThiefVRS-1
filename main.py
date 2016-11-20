@@ -37,7 +37,7 @@ class Treasure():
     global location
     def __init__(self):
         self.location = [randrange(0,775),randrange(0,475)]
-        image = C.create_image(self.location[0],self.location[1],image=photo2, anchor = CENTER)   
+        self.image = C.create_image(self.location[0],self.location[1],image=photo2, anchor = CENTER)   
 
 #defines the class thief and all the movements the thief can make       
 class Thief():
@@ -79,8 +79,7 @@ def getNearestTreasure():
     global treasuresList
     global thief
     global target
-    current = 0
-    best = 10000
+    best = 1000
     for i in range(0,len(treasuresList)):
         current = sqrt(((thief.location[0]-treasuresList[i].location[0])**2) + ((thief.location[1]-treasuresList[i].location[1])**2))
         if current < best:
@@ -107,7 +106,7 @@ def thiefMove():
                 thief.move_down()
             else:
                 thief.move_up()
-        treasuresList.pop(int(target[2]))
+        C.delete(treasuresList.pop(int(target[2])).image)
         print("couves")
         
 #this function deletes all the treasures and sets new random treasures
