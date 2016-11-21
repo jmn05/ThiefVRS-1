@@ -8,7 +8,6 @@ target = [0,0,0]
 count = 0
 window = Tk() #Creates a new tkinter window
 
-
 #This function fully closes python
 def quit():
     global window
@@ -24,6 +23,9 @@ controlPanel = Frame(window) # A Frame for all the buttons to go into
 #creates a canvas for the virtual robots to move on
 C = Canvas(window,height=500,width=800,bg="white")
 C.pack()
+
+background_image= PhotoImage(file = "background.gif")
+C.create_image(400,300,image=background_image, anchor = CENTER)
 
 numberOfTreasures = 8
 treasuresList = []
@@ -176,6 +178,7 @@ def resetTreasures():
 #this function clears the canvas and calls the functions responsible to create new treasures, a new thief and a new cop   
 def callReset():
     C.delete("all")
+    C.create_image(400,300,image=background_image, anchor = CENTER)
     global treasuresList
     resetTreasures()
     global thief
@@ -190,14 +193,12 @@ for i in range(0,numberOfTreasures):
 #Gives the buttons their various properties
 resetCanvas = Button(controlPanel, text="Reset", command= callReset)
 startButton = Button(controlPanel, text = "Start Simulation", command = Movement)
-stopButton = Button(controlPanel,text = "End Simulation")
 quitButton = Button(controlPanel, text = "Quit", command= quit)
 
 #Places the button on the screen
 controlPanel.pack()
 resetCanvas.pack(side=LEFT)
 startButton.pack(side=LEFT)
-stopButton.pack(side=LEFT)
 quitButton.pack(side=LEFT)
 
 
