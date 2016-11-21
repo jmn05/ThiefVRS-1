@@ -44,7 +44,7 @@ class Thief():
     def __init__(self):
         self.location = [randrange(0,750),randrange(0,450)]
         self.image2 = C.create_image(self.location[0],self.location[1],image=photo, anchor = CENTER)
-        self.speed = 5
+        self.speed = 0.0625
         self.move = 1
         self.notready = False
     def move_up(self):
