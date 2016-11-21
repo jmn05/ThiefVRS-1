@@ -52,7 +52,7 @@ class Thief():
         self.location = [randrange(0,750),randrange(0,450)]
         self.image2 = C.create_image(self.location[0],self.location[1],image=photo, anchor = CENTER)
         self.speed = 1
-        self.move = 0.1
+        self.move = 0.2
         self.notready = False
     def move_up(self):
         self.location[1] = self.location[1] - self.move*self.speed
@@ -85,7 +85,7 @@ class Cop():
         self.copO = C.create_image(self.location[0],self.location[1],image=copImage,anchor=CENTER)
     # SETUP
     direction = 360 #angle
-    speed = 0.1
+    speed = 0.2
     ready=True
     found=False
     def goTow(self):
@@ -133,7 +133,7 @@ class Cop():
         if(math.sqrt((self.location[0]-TargetX)**2 + (self.location[1]-TargetY)**2)<100):
             if(math.fabs(round(self.location[0]-TargetX))<1 and math.fabs(round(self.location[1]-TargetY)<1)):
                 self.found=True
-            self.speed=0.2
+            self.speed=0.3
             self.dirGen(TargetX,TargetY)
             self.goTow()
             
