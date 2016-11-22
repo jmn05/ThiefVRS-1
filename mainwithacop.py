@@ -208,13 +208,17 @@ def thiefMove():
                 cop.start(thief.location[0], thief.location[1])
                 
         C.delete(treasuresList.pop(int(target[2])).image)
+        count += 1
+        updateScore()
 
 def Movement():
     global killloop
     killloop = False
     thiefMove()
     
-
+def updateScore():
+    global count
+    C.create_text(anchor = NW, text = str(count))
 
 #this function deletes all the treasures and sets new random treasures
 def resetTreasures():
