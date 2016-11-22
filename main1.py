@@ -233,6 +233,7 @@ def thiefMove():
     if(len(treasuresList) == 0):
         global finished
         finished = True
+        victoryTextThief = C.create_text(400,300,anchor = CENTER,fill= "white", text = "THIEF WON!", font = ("Arial", 30))
     if(killloop and cop.found): #FINISH HIM!
         i=0
         while(i<200):
@@ -247,6 +248,7 @@ def thiefMove():
         global finished
         finished = True
         cop.found = False
+        victoryTextcop = C.create_text(400,300,anchor = CENTER,fill= "white", text = "COP WON!", font = ("Arial", 30))
 
 def Movement():
     global finished
@@ -261,7 +263,7 @@ def Movement():
         global scoreText
         killloop = False
         count = 0
-        scoreText = C.create_text(10,10,anchor = NW, text = "Score: " + str(count))
+        scoreText = C.create_text(10,10,anchor = NW,fill= "white", text = "Score: " + str(count))
         thiefMove()
         started==True
     
@@ -269,7 +271,7 @@ def updateScore():
     global count
     global scoreText
     C.delete(scoreText)
-    scoreText = C.create_text(10,10,anchor = NW, text = "Score: " + str(count))
+    scoreText = C.create_text(10,10,anchor = NW,fill= "white", text = "Score: " + str(count))
 
 #this function deletes all the treasures and sets new random treasures
 def resetTreasures():
@@ -290,7 +292,7 @@ def callReset():
     global count
     finished = False
     count = 0
-    scoreText = C.create_text(0,0,anchor = NW, text = str(count))
+    scoreText = C.create_text(0,0,anchor = NW,fill= "WHITE", text = str(count))
     C.delete("all")
     killloop=True
     C.create_image(400,300,image=background_image, anchor = CENTER)
