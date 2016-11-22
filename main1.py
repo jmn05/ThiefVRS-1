@@ -84,6 +84,7 @@ class Thief():
         C.coords(self.image2,self.location[0],self.location[1])
         C.update()
 
+#defines the class cop and all the movements the cop can make
 class Cop():
     def __init__(self):
         self.location = [600,60]
@@ -207,6 +208,7 @@ def thiefMove():
         if(killloop):
             break
             
+#this is the movement of the thief towards the closest treasure
         getNearestTreasure()
         while(thief.location[0] != target[0] or thief.location[1] != target[1]):
             if(killloop):
