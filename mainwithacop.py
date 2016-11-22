@@ -1,3 +1,4 @@
+
 from tkinter import * #Imports tkinter for the GUI
 from time import * #Times is used for animations
 from random import *
@@ -208,17 +209,21 @@ def thiefMove():
                 cop.start(thief.location[0], thief.location[1])
                 
         C.delete(treasuresList.pop(int(target[2])).image)
-        count += 1
+        count = count +1
         updateScore()
 
 def Movement():
     global killloop
+    global scoreText
     killloop = False
+    scoreText = C.create_text(0,0,anchor = NW, text = str("0"))
     thiefMove()
     
 def updateScore():
     global count
-    C.create_text(anchor = NW, text = str(count))
+    global scoreText
+    C.delete(scoreText)
+    scoreText = C.create_text(0,0,anchor = NW, text = str(count))
 
 #this function deletes all the treasures and sets new random treasures
 def resetTreasures():
@@ -232,14 +237,15 @@ def resetTreasures():
 #this function clears the canvas and calls the functions responsible to create new treasures, a new thief and a new cop   
 def callReset():
     global killloop
+    global treasuresList
+    global thief
+    global cop
+    
     C.delete("all")
     killloop=True
     C.create_image(400,300,image=background_image, anchor = CENTER)
-    global treasuresList
     resetTreasures()
-    global thief
     thief = Thief()
-    global cop
     cop = Cop()
 
 for i in range(0,numberOfTreasures):
@@ -261,12 +267,4 @@ quitButton.pack(side=LEFT)
 
 ################################################################################################################
 
-def mainLoop():
-    global treasuresList
-    global thief
-    x=0
-    if(x==10):
-        window.after(mainLoop(),16)
-        x=x+1
 
-window.after(mainLoop(),16)
