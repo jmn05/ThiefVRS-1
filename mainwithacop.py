@@ -175,14 +175,22 @@ def getNearestTreasure():
         print(target[2])
 
 #this function moves the thief to the closest treasure and catches it
+killloop = False
+print(killloop)
 def thiefMove():
     global thief
     global treasuresList
     global target
     global count
+    global killloop
     while(len(treasuresList) != 0):
+        if(killloop):
+            break
+            
         getNearestTreasure()
         while(thief.location[0] != target[0] or thief.location[1] != target[1]):
+            if(killloop):
+                break
             if thief.location[0] < target[0]:
                 thief.move_right()
                 cop.start(thief.location[0], thief.location[1])
@@ -202,7 +210,10 @@ def thiefMove():
         C.delete(treasuresList.pop(int(target[2])).image)
 
 def Movement():
+    global killloop
+    killloop = False
     thiefMove()
+    
 
 
 #this function deletes all the treasures and sets new random treasures
@@ -216,7 +227,9 @@ def resetTreasures():
 
 #this function clears the canvas and calls the functions responsible to create new treasures, a new thief and a new cop   
 def callReset():
+    global killloop
     C.delete("all")
+    killloop=True
     C.create_image(400,300,image=background_image, anchor = CENTER)
     global treasuresList
     resetTreasures()
@@ -253,4 +266,3 @@ def mainLoop():
         x=x+1
 
 window.after(mainLoop(),16)
-
