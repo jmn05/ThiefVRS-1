@@ -24,18 +24,22 @@ window.geometry("800x600")
 
 controlPanel = Frame(window) # A Frame for all the buttons to go into
 
+finished = False
+started = False
+
 #creates a canvas for the virtual robots to move on
 C = Canvas(window,height=500,width=800,bg="white")
 C.pack()
-
-background_image= PhotoImage(file = "background.gif")
-C.create_image(400,300,image=background_image, anchor = CENTER)
+bgfilename = "backgroundg.gif"
+background_image= PhotoImage(file = bgfilename)
+bg = C.create_image(400,300,image=background_image, anchor = CENTER)
 
 numberOfTreasures = 8
 treasuresList = []
 
 #import of the file containing the thief image        
 photo = PhotoImage(file = "Thief.gif")
+thiefd = PhotoImage(file = "Thiefd.gif")
 photo2 = PhotoImage(file = "coin.gif")
 copImage = PhotoImage(file="cop.gif")
 copImageLeft = PhotoImage(file="cop2.gif")
@@ -129,13 +133,15 @@ class Cop():
             
        # print(math.degrees(math.atan(vecY/vecX)))
     def goTo(self, TargetX, TargetY,ranX,ranY):
+        global killloop
         tarX = ranX
         tarY = ranY
 
         if(math.sqrt((self.location[0]-TargetX)**2 + (self.location[1]-TargetY)**2)<100):
             self.follow = True
-            if(math.fabs(round(self.location[0]-TargetX))<1 and math.fabs(round(self.location[1]-TargetY)<1)):
+            if(math.sqrt((self.location[0]-TargetX)**2 + (self.location[1]-TargetY)**2)<1):
                 self.found=True
+                killloop = True
             self.speed=0.2
             self.dirGen(TargetX,TargetY)
             self.goTow()
@@ -164,9 +170,9 @@ class Cop():
                 self.ranY = random.randrange(50,550)
                 self.ranDone = False
             self.goTo(tarX, tarY, self.ranX, self.ranY)
-        if(self.found == True):
-            thief=Thief()
-            C.delete(thief.image2)
+        #if(self.found == True):
+            #thief=Thief()
+            #C.delete(thief.image2)
 
 
 
@@ -220,17 +226,44 @@ def thiefMove():
             else:
                 thief.move_up()
                 cop.start(thief.location[0], thief.location[1])
-                
-        C.delete(treasuresList.pop(int(target[2])).image)
-        count = count +1
-        updateScore()
+        if(math.sqrt((thief.location[0]-target[0])**2 + (thief.location[1]-target[1])**2)<10):    
+            C.delete(treasuresList.pop(int(target[2])).image)
+            count = count +1
+            updateScore()
+    if(len(treasuresList) == 0):
+        global finished
+        finished = True
+    if(killloop and cop.found): #FINISH HIM!
+        i=0
+        while(i<200):
+            cop.start(thief.location[0]-i, thief.location[1])
+            i=i+1
+            sleep(0.005)
+        j=2
+        time.sleep(1)
+        global thiefd
+        C.itemconfig(thief.image2, image=thiefd)
+        j=j+1
+        global finished
+        finished = True
+        cop.found = False
 
 def Movement():
-    global killloop
-    global scoreText
-    killloop = False
-    scoreText = C.create_text(0,0,anchor = NW, text = str("0"))
-    thiefMove()
+    global finished
+    global started
+    started = False
+    if(finished):
+        callReset()
+        started = False
+    if(started == False):
+        global count
+        global killloop
+        global scoreText
+        killloop = False
+        count = 0
+        scoreText = C.create_text(0,0,anchor = NW, text = str(count))
+        thiefMove()
+        started==True
     
 def updateScore():
     global count
@@ -253,7 +286,11 @@ def callReset():
     global treasuresList
     global thief
     global cop
-    
+    global finished
+    global count
+    finished = False
+    count = 0
+    scoreText = C.create_text(0,0,anchor = NW, text = str(count))
     C.delete("all")
     killloop=True
     C.create_image(400,300,image=background_image, anchor = CENTER)
