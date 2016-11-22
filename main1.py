@@ -261,7 +261,7 @@ def Movement():
         global scoreText
         killloop = False
         count = 0
-        scoreText = C.create_text(0,0,anchor = NW, text = str(count))
+        scoreText = C.create_text(10,10,anchor = NW, text = "Score: " + str(count))
         thiefMove()
         started==True
     
@@ -269,7 +269,7 @@ def updateScore():
     global count
     global scoreText
     C.delete(scoreText)
-    scoreText = C.create_text(0,0,anchor = NW, text = str(count))
+    scoreText = C.create_text(10,10,anchor = NW, text = "Score: " + str(count))
 
 #this function deletes all the treasures and sets new random treasures
 def resetTreasures():
