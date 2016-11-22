@@ -1,4 +1,3 @@
-
 from tkinter import * #Imports tkinter for the GUI
 from time import * #Times is used for animations
 from random import *
@@ -221,9 +220,9 @@ def Movement():
     
 def updateScore():
     global count
-    global scoreText
-    C.delete(scoreText)
-    scoreText = C.create_text(0,0,anchor = NW, text = str(count))
+    scoreText = 0
+    C.delete("scoreText")
+    C.create_text(10, 10, text = str(count), tag = "scoreText")
 
 #this function deletes all the treasures and sets new random treasures
 def resetTreasures():
@@ -262,9 +261,4 @@ controlPanel.pack()
 resetCanvas.pack(side=LEFT)
 startButton.pack(side=LEFT)
 quitButton.pack(side=LEFT)
-
-
-
-################################################################################################################
-
 
