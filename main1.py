@@ -249,7 +249,7 @@ def thiefMove():
         finished = True
         cop.found = False
         count = 0
-        updatescore()
+        updateScore()
         victoryTextcop = C.create_text(400,300,anchor = CENTER,fill= "white", text = "COP WON!", font = ("Arial", 30))
 
 def Movement():
