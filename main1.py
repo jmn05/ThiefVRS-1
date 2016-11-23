@@ -168,7 +168,7 @@ class Cop():
         if(self.ready):
             if(self.ranDone):
                 self.ranX = random.randrange(50,750)
-                self.ranY = random.randrange(50,550)
+                self.ranY = random.randrange(50,450)
                 self.ranDone = False
             self.goTo(tarX, tarY, self.ranX, self.ranY)
         #if(self.found == True):
@@ -247,7 +247,7 @@ def thiefMove():
         global thiefd
         C.itemconfig(thief.image2, image=thiefd)
         j=j+1
-        global finished
+        
         finished = True
         cop.found = False
         count = 0
@@ -322,5 +322,4 @@ quitButton.pack(side=LEFT)
 
 
 ################################################################################################################
-
 
