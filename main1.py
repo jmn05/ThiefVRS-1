@@ -30,7 +30,7 @@ started = False
 #creates a canvas for the virtual robots to move on
 C = Canvas(window,height=500,width=800,bg="white")
 C.pack()
-bgfilename = "backgroundg.gif"
+bgfilename = "background.gif"
 background_image= PhotoImage(file = bgfilename)
 bg = C.create_image(400,300,image=background_image, anchor = CENTER)
 
